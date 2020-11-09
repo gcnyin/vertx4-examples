@@ -22,7 +22,5 @@ fun main(args: Array<String>) {
     ctx.response().end("error")
   }
   val httpServer = vertx.createHttpServer()
-  httpServer.requestHandler(router).listen(8080) { r ->
-    logger.info { "listen on 8080 port" }
-  }
+  httpServer.requestHandler(router).listen(8080) { logger.info { "listen on 8080 port" } }
 }
