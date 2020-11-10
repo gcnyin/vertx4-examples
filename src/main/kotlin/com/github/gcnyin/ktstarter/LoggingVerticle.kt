@@ -9,7 +9,7 @@ class LoggingVerticle : CoroutineVerticle() {
   override suspend fun start() {
     val eventBus = vertx.eventBus()
     eventBus.consumer<String>("logging") { message ->
-      logger.info { message }
+      logger.info { message.body() }
     }
   }
 }
