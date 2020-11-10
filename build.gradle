@@ -10,13 +10,17 @@ repositories {
   mavenCentral()
 }
 
+ext {
+  vertxVersion = "4.0.0.CR1"
+}
+
 dependencies {
   implementation platform('org.jetbrains.kotlin:kotlin-bom')
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-  implementation 'io.vertx:vertx-web:4.0.0.CR1'
-  implementation 'io.vertx:vertx-lang-kotlin:4.0.0.CR1'
-  implementation 'io.vertx:vertx-mysql-client:4.0.0.CR1'
-  implementation 'io.vertx:vertx-lang-kotlin-coroutines:4.0.0.CR1'
+  implementation "io.vertx:vertx-web:$vertxVersion"
+  implementation "io.vertx:vertx-lang-kotlin:$vertxVersion"
+  implementation "io.vertx:vertx-mysql-client:$vertxVersion"
+  implementation "io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion"
   implementation 'io.github.microutils:kotlin-logging:1.12.0'
   implementation 'ch.qos.logback:logback-classic:1.2.3'
   implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.11.3'
