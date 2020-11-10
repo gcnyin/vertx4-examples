@@ -1,8 +1,11 @@
 package com.github.gcnyin.ktstarter
 
 import io.vertx.core.Handler
+import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
+import io.vertx.kotlin.core.json.json
+import io.vertx.kotlin.core.json.obj
 import io.vertx.kotlin.coroutines.CoroutineVerticle
 import io.vertx.kotlin.coroutines.await
 import io.vertx.kotlin.coroutines.dispatcher
@@ -25,7 +28,8 @@ class HttpServerVerticle(private val port: Int) : CoroutineVerticle() {
     val router = Router.router(vertx)
     router.get("/user/:userId").handler(UserQueryHandler(mySQLPool, vertx.dispatcher()))
     router.errorHandler(500) { ctx ->
-      ctx.response().end("error")
+      ctx.response().putHeader("content-type", "application/json")
+      ctx.response().end(JsonObject().put("message", "unknown error").encode())
     }
     val httpServer = vertx.createHttpServer()
     httpServer.requestHandler(router).listen(port).await()
@@ -35,23 +39,27 @@ class HttpServerVerticle(private val port: Int) : CoroutineVerticle() {
 
 class UserQueryHandler(private val mySQLPool: MySQLPool, override val coroutineContext: CoroutineContext) : Handler<RoutingContext>, CoroutineScope {
   private val logger = KotlinLogging.logger {}
+  private val invalidUserId = json { obj("message" to "invalid user id").encode() }
+  private val internalError = json { obj("message" to "internal error").encode() }
 
   override fun handle(ctx: RoutingContext?) {
     if (ctx == null) {
       return
     }
     val userId = ctx.pathParam("userId")
+    val response = ctx.response().putHeader("content-type", "application/json")
     if (userId == null) {
-      ctx.response().end("Invalid userId");
+      response.end(invalidUserId)
       return
     }
+
     launch {
       try {
         val rows = mySQLPool.query("select id, name from user where id = '$userId'").execute().await()
         if (rows.size() < 1) {
-          val s = "user $userId not found"
-          logger.info { s }
-          ctx.response().setStatusCode(404).end(s)
+          val message = "user $userId not found"
+          logger.info { message }
+          response.setStatusCode(404).end(json { obj("message" to message).encode() })
           return@launch
         }
         val row = rows.elementAt(0)
@@ -59,13 +67,11 @@ class UserQueryHandler(private val mySQLPool: MySQLPool, override val coroutineC
         val name = row?.getString(1)
         val user = id?.let { name?.let { it1 -> User(it, it1) } }
         val userString = mapper.writeValueAsString(user)
-        val response = ctx.response()
-        response.putHeader("content-type", "application/json")
         response.end(userString)
         ctx.vertx().eventBus().send("logging", "query user $id")
       } catch (e: Exception) {
         logger.error(e) { "Internal error" }
-        ctx.response().setStatusCode(500).end("Internal error")
+        response.setStatusCode(500).end(internalError)
       }
     }
   }
