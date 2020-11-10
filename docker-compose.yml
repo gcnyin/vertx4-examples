@@ -12,5 +12,20 @@ services:
       - 3306:3306
     volumes:
       - mysqldata:/var/lib/mysql
+  ignite:
+    image: apacheignite/ignite:2.8.1
+    restart: always
+    environment:
+      IGNITE_WORK_DIR: /storage
+    ports:
+      - 8080:8080
+      - 10800:10800
+      - 11211:11211
+      - 47100:47100
+      - 47500:47500
+      - 49112:49112
+    volumes:
+      - ignitedata:/storage
 volumes:
   mysqldata:
+  ignitedata:
