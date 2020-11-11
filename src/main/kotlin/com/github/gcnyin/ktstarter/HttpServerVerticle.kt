@@ -68,7 +68,7 @@ class UserQueryHandler(private val mySQLPool: MySQLPool, override val coroutineC
         val user = id?.let { name?.let { it1 -> User(it, it1) } }
         val userString = mapper.writeValueAsString(user)
         response.end(userString)
-        ctx.vertx().eventBus().send("logging", "query user $id")
+        ctx.vertx().eventBus().send("logging", LoggingMessage("query user $id"))
       } catch (e: Exception) {
         logger.error(e) { "Internal error" }
         response.setStatusCode(500).end(internalError)

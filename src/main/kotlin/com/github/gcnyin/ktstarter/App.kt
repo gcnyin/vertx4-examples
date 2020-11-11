@@ -13,6 +13,7 @@ suspend fun main(args: Array<String>) {
   val manager = IgniteClusterManager()
   val options = VertxOptions().setClusterManager(manager)
   val vertx = Vertx.clusteredVertx(options).await()
+  vertx.eventBus().registerDefaultCodec(LoggingMessage::class.java, LoggingMessageCodec())
   if (name == "http") {
     val port = if (args.size >= 2) Integer.parseInt(args[1]) else 8081
     vertx.deployVerticle(HttpServerVerticle(port)).await()

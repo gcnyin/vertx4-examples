@@ -4,6 +4,7 @@ A project for practicing vertx and kotlin, including
 
 - vertx
     - eventbus
+    - eventbus custom message class
     - ignite cluster
     - mysql client
 - kotlin
