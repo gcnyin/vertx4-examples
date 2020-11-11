@@ -7,10 +7,7 @@ import io.vertx.spi.cluster.ignite.IgniteClusterManager
 import mu.KotlinLogging
 
 suspend fun main(args: Array<String>) {
-  if (args.isEmpty()) {
-    return
-  }
-  val name = args[0]
+  val name = if (args.isEmpty()) "http" else args[0]
   val logger = KotlinLogging.logger {}
   logger.info { "start" }
   val manager = IgniteClusterManager()
