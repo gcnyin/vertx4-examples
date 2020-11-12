@@ -3,4 +3,4 @@ CREATE TABLE `user` (
 	name VARCHAR(32) NOT NULL
 );
 
-INSERT INTO USER(name) VALUES('Tom', 'Jerry');
+INSERT INTO `user`(name) VALUES('Tom'), ('Jerry');
