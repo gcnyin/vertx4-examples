@@ -1,6 +1,6 @@
 CREATE TABLE `user` (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	name VARCHAR(32) NOT NULL
+	name VARCHAR(16) NOT NULL UNIQUE
 );
 
-INSERT INTO `user`(name) VALUES('Tom'), ('Jerry');
+INSERT INTO `user` (name) VALUES('Tom'), ('Jerry');
