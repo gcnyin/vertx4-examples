@@ -32,7 +32,7 @@ dependencies {
 }
 
 application {
-  mainClassName = 'com.github.gcnyin.ktstarter.AppKt'
+  mainClassName = 'com.github.gcnyin.sstarter.Main'
 }
 
 compileKotlin {
