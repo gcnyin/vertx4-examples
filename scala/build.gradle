@@ -1,0 +1,25 @@
+plugins {
+  id 'scala'
+  id 'application'
+  id "com.github.johnrengelman.shadow" version "6.1.0"
+}
+
+repositories {
+  mavenLocal()
+  maven { url 'https://repo.huaweicloud.com/repository/maven/' }
+  mavenCentral()
+}
+
+ext {
+  vertxVersion = "4.0.0.CR1"
+}
+
+dependencies {
+  implementation "io.vertx:vertx-web:$vertxVersion"
+  implementation 'org.scala-lang:scala-library:2.13.3'
+  implementation 'ch.qos.logback:logback-classic:1.2.3'
+}
+
+application {
+  mainClassName = 'com.github.gcnyin.sstarter.Main'
+}
