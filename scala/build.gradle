@@ -18,6 +18,7 @@ dependencies {
   implementation "io.vertx:vertx-web:$vertxVersion"
   implementation 'org.scala-lang:scala-library:2.13.3'
   implementation 'ch.qos.logback:logback-classic:1.2.3'
+  implementation 'com.typesafe.scala-logging:scala-logging_2.13:3.9.2'
 }
 
 application {

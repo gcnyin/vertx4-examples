@@ -1,15 +1,15 @@
 package com.github.gcnyin.sstarter
 
 import com.github.gcnyin.sstarter.VertxFutureConverters.CompletionStageOps
+import com.typesafe.scalalogging.Logger
 import io.vertx.core.{AbstractVerticle, Handler, Promise, Vertx}
 import io.vertx.ext.web.{Router, RoutingContext}
-import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 
 object Main {
-  private val logger: Logger = LoggerFactory.getLogger(Main.getClass)
+  private val logger: Logger = Logger(Main.getClass)
 
   def main(args: Array[String]): Unit = {
     val vertx: Vertx = Vertx.vertx()
@@ -25,7 +25,7 @@ object Main {
 }
 
 class HttpVerticle(val port: Int) extends AbstractVerticle {
-  private val logger: Logger = LoggerFactory.getLogger(classOf[HttpVerticle])
+  private val logger: Logger = Logger(classOf[HttpVerticle])
 
   override def start(startPromise: Promise[Void]): Unit = {
     val router = Router.router(vertx)
