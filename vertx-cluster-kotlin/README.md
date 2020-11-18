@@ -6,6 +6,8 @@ Including
 - vertx web
 - vertx cluster
 - vertx mysql client
+- vertx eventbus
+- vertx eventbus custom message class
 - ignite cluster manager
 - kotlin coroutine
 
