@@ -30,7 +30,7 @@ dependencies {
 }
 
 application {
-  mainClassName = 'com.github.gcnyin.ktstarter.App'
+  mainClassName = 'com.github.gcnyin.ktstarter.AppKt'
 }
 
 compileKotlin {
