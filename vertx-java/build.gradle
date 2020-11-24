@@ -1,0 +1,23 @@
+plugins {
+  id 'java'
+  id 'application'
+  id "com.github.johnrengelman.shadow" version "6.1.0"
+}
+
+repositories {
+  mavenLocal()
+  maven { url 'https://repo.huaweicloud.com/repository/maven/' }
+  mavenCentral()
+}
+
+ext {
+  vertxVersion = "4.0.0.CR1"
+}
+
+dependencies {
+  implementation "io.vertx:vertx-web:$vertxVersion"
+}
+
+application {
+  mainClassName = 'com.github.gcnyin.jstarter.Main'
+}
